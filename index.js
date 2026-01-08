@@ -21,13 +21,19 @@ app.get("/json-params", (req, res) => {
 
 // Endpoint deploy
 app.post("/deploy", (req, res) => {
-  res.json({
-    message: "Activity deployed successfully",
-    user: req.body.user || "unknown"
-  });
+  const { type, data } = req.body;
+
+  try {
+    const report = handleReport(type, data);
+    res.json({
+      status: "ok",
+      created_report: report
+    });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 });
 
-// Endpoint analytics
 app.get("/analytics", (req, res) => {
   res.json({
     reports_submitted: 12,
