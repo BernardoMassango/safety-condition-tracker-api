@@ -1,9 +1,7 @@
-const Report = require("./Report");
-
-class NearMissReport extends Report {
-  validate() {
-    return this.data.description;
+class ReportFactory {
+  createReport(data) {
+    throw new Error("createReport() must be implemented");
   }
 }
 
-module.exports = NearMissReport;
+module.exports = ReportFactory;
