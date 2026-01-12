@@ -6,7 +6,7 @@ class Report {
   }
 
   validate() {
-    throw new Error("validate() must be implemented");
+    throw new Error("validate() must be implemented by subclasses");
   }
 }
 
