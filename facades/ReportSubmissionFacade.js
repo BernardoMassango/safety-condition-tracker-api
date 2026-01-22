@@ -1,21 +1,22 @@
 const { handleReport } = require("../processors/ConditionProcessor");
-const SimpleRiskStrategy = require("../strategies/SimpleRiskStrategy");
-const SeverityBasedRiskStrategy = require("../strategies/SeverityBasedRiskStrategy");
+const RiskAssessmentService = require("../services/RiskAssessmentService");
 
 class ReportSubmissionFacade {
+  constructor() {
+    this.riskService = new RiskAssessmentService();
+  }
+
   submitReport(type, data) {
+    // Factory Method: criação e validação
     const report = handleReport(type, data);
 
-    let strategy;
-    if (type === "hazard") {
-      strategy = new SeverityBasedRiskStrategy();
-    } else {
-      strategy = new SimpleRiskStrategy();
-    }
+    // Avaliação de risco delegada (refatorização do Blob)
+    const riskAssessment = this.riskService.assessRisk(type, report);
 
-    const riskAssessment = strategy.assess(report);
-
-    return { report, riskAssessment };
+    return {
+      report,
+      riskAssessment
+    };
   }
 }
 
