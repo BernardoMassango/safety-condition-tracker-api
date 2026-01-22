@@ -22,17 +22,12 @@ app.get("/json-params", (req, res) => {
   });
 });
 
-// Endpoint que usa Factory Method + Facade + Strategy
 app.post("/deploy", (req, res) => {
   const { type, data } = req.body;
 
   try {
     const result = facade.submitReport(type, data);
-
-    res.json({
-      status: "ok",
-      result
-    });
+    res.json({ status: "ok", result });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
